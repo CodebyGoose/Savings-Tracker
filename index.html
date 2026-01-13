@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Savings Tracker - Reach Your Goals</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <header class="header">
+            <div class="header-content">
+                <div class="logo-icon"><span class="material-icons">account_balance_wallet</span></div>
+                <h1>Savings Tracker</h1>
+                <p class="subtitle">Turn your dreams into reality, one peso at a time</p>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <!-- Goals List Section -->
+            <section class="card goals-list-section" id="goalsListSection" style="display: none;">
+                <div class="card-header">
+                    <h2><span class="material-icons">list</span> My Savings Goals</h2>
+                    <button class="btn btn-primary" id="addNewGoalBtn">
+                        <span class="material-icons">add</span>
+                        Add New Goal
+                    </button>
+                </div>
+                <div class="goals-grid" id="goalsGrid">
+                    <!-- Goals will be dynamically inserted here -->
+                </div>
+            </section>
+
+            <!-- Goal Setup Section -->
+            <section class="card goal-section" id="goalSection">
+                <div class="card-header">
+                    <h2><span class="material-icons">track_changes</span> <span id="goalFormTitle">Set Your Savings Goal</span></h2>
+                    <p class="card-description">Define what you're working towards and start your journey</p>
+                </div>
+                <form id="goalForm" class="goal-form">
+                    <div class="form-group">
+                        <label for="goalName">
+                            <span class="label-icon material-icons">lightbulb</span>
+                            What are you saving for?
+                        </label>
+                        <input type="text" id="goalName" placeholder="e.g., Gaming Computer, Dream Vacation, New Car" required>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="goalAmount">
+                                <span class="label-icon material-icons">gps_fixed</span>
+                                Target Amount
+                            </label>
+                            <div class="input-wrapper">
+                                <span class="input-prefix">₱</span>
+                                <input type="number" id="goalAmount" placeholder="60000" min="1" step="0.01" required>
+                                <span class="input-suffix">pesos</span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="dailyAmount">
+                                <span class="label-icon material-icons">payments</span>
+                                Daily Deposit
+                            </label>
+                            <div class="input-wrapper">
+                                <span class="input-prefix">₱</span>
+                                <input type="number" id="dailyAmount" placeholder="100" min="0.01" step="0.01" required>
+                                <span class="input-suffix">pesos</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="timePeriod">
+                            <span class="label-icon material-icons">schedule</span>
+                            Target Time Period (Optional)
+                        </label>
+                        <p class="calendar-description">Set a target duration for your goal. The app will still estimate completion based on your deposits.</p>
+                        <div class="time-period-group">
+                            <input type="number" id="timeValue" placeholder="6" min="1" required>
+                            <select id="timeUnit" required>
+                                <option value="days">Days</option>
+                                <option value="months" selected>Months</option>
+                                <option value="years">Years</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <span class="label-icon material-icons">calendar_today</span>
+                            Select Deposit Days
+                        </label>
+                        <p class="calendar-description">Choose specific days of the week when you want to make deposits. This helps refine the estimated completion.</p>
+                        <div class="calendar-container">
+                            <div class="calendar-weekdays">
+                                <div class="calendar-day-header">Sun</div>
+                                <div class="calendar-day-header">Mon</div>
+                                <div class="calendar-day-header">Tue</div>
+                                <div class="calendar-day-header">Wed</div>
+                                <div class="calendar-day-header">Thu</div>
+                                <div class="calendar-day-header">Fri</div>
+                                <div class="calendar-day-header">Sat</div>
+                            </div>
+                            <div class="calendar-days" id="calendarDays">
+                                <!-- Calendar days will be generated here -->
+                            </div>
+                            <div class="calendar-actions">
+                                <button type="button" class="btn btn-secondary" id="selectAllDaysBtn">
+                                    <span class="material-icons">select_all</span>
+                                    Select All
+                                </button>
+                                <button type="button" class="btn btn-secondary" id="clearAllDaysBtn">
+                                    <span class="material-icons">clear_all</span>
+                                    Clear All
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="estimated-time-display" id="estimatedTimeDisplay" style="display: none;">
+                        <div class="estimated-time-card">
+                            <span class="material-icons">schedule</span>
+                            <div class="estimated-time-content">
+                                <div class="estimated-time-label">Estimated Time to Reach Goal:</div>
+                                <div class="estimated-time-value" id="estimatedTimeValue">-</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" id="backToGoalListFromFormBtn" class="btn btn-secondary">
+                            <span class="material-icons">arrow_back</span>
+                            Back to All Goals
+                        </button>
+                        <button type="submit" class="btn btn-primary">
+                            <span class="material-icons">save</span>
+                            Save Goal
+                        </button>
+                    </div>
+                </form>
+            </section>
+
+            <!-- Progress Display Section -->
+            <section class="card progress-section" id="progressSection" style="display: none;">
+                <div class="progress-header">
+                    <div class="goal-title-wrapper">
+                        <h2 id="currentGoalName">Your Goal</h2>
+                        <span class="goal-badge">Active Goal</span>
+                    </div>
+                    <div class="goal-actions">
+                        <button class="btn btn-secondary" id="backToGoalsBtn">
+                            <span class="material-icons">arrow_back</span>
+                            All Goals
+                        </button>
+                        <button class="btn btn-secondary" id="editGoalBtn">
+                            <span class="material-icons">edit</span>
+                            Edit
+                        </button>
+                        <button class="btn btn-primary" id="addNewGoalFromProgressBtn">
+                            <span class="material-icons">add</span>
+                            New Goal
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Progress Stats -->
+                <div class="stats-container">
+                    <div class="stat-card stat-card-primary">
+                        <div class="stat-icon material-icons">gps_fixed</div>
+                        <div class="stat-label">Target Amount</div>
+                        <div class="stat-value" id="targetAmount">₱0</div>
+                    </div>
+                    <div class="stat-card stat-card-success">
+                        <div class="stat-icon material-icons">account_balance_wallet</div>
+                        <div class="stat-label">Current Savings</div>
+                        <div class="stat-value success" id="currentSavings">₱0</div>
+                    </div>
+                    <div class="stat-card stat-card-warning">
+                        <div class="stat-icon material-icons">assessment</div>
+                        <div class="stat-label">Remaining</div>
+                        <div class="stat-value" id="remainingAmount">₱0</div>
+                    </div>
+                    <div class="stat-card stat-card-info">
+                        <div class="stat-icon material-icons">trending_up</div>
+                        <div class="stat-label">Progress</div>
+                        <div class="stat-value" id="progressPercent">0%</div>
+                    </div>
+                </div>
+
+                <!-- Progress Bar -->
+                <div class="progress-bar-container">
+                    <div class="progress-bar-header">
+                        <span>Your Progress</span>
+                        <span class="progress-percentage-text" id="progressPercentText">0%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill">
+                            <div class="progress-shine"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Time Information -->
+                <div class="time-info">
+                    <div class="time-item">
+                        <span class="time-label">Daily Deposit:</span>
+                        <span class="time-value" id="displayDailyAmount">₱0</span>
+                    </div>
+                    <div class="time-item">
+                        <span class="time-label">Time Period:</span>
+                        <span class="time-value" id="displayTimePeriod">-</span>
+                    </div>
+                    <div class="time-item">
+                        <span class="time-label">Days Remaining:</span>
+                        <span class="time-value" id="daysRemaining">-</span>
+                    </div>
+                    <div class="time-item">
+                        <span class="time-label">Estimated Completion:</span>
+                        <span class="time-value" id="estimatedCompletion">-</span>
+                    </div>
+                    <div class="time-item" style="display: none;">
+                        <span class="time-label">Your Target Time:</span>
+                        <span class="time-value info" id="userTargetTimePeriod">-</span>
+                    </div>
+                </div>
+
+                <!-- Selected Deposit Days -->
+                <div class="selected-days-section" id="selectedDaysSection" style="display: none;">
+                    <div class="section-header">
+                        <h3><span class="material-icons">calendar_today</span> Scheduled Deposit Days</h3>
+                    </div>
+                    <div class="selected-days-display" id="selectedDaysDisplay">
+                        <!-- Selected days will be displayed here -->
+                    </div>
+                </div>
+
+                <!-- Deposit History -->
+                <div class="deposit-section">
+                    <div class="section-header">
+                        <h3><span class="material-icons">payments</span> Deposit History</h3>
+                        <span class="deposit-count" id="depositCount">0 deposits</span>
+                    </div>
+                    <form id="depositForm" class="deposit-form">
+                        <div class="deposit-input-group">
+                            <div class="input-wrapper">
+                                <span class="input-prefix">₱</span>
+                                <input type="number" id="depositAmount" placeholder="Enter amount to deposit" min="0.01" step="0.01" required>
+                                <span class="input-suffix">pesos</span>
+                            </div>
+                            <button type="submit" class="btn btn-success">
+                                <span>Add Deposit</span>
+                                <span class="btn-icon material-icons">add</span>
+                            </button>
+                        </div>
+                    </form>
+                    <div class="deposit-list" id="depositList">
+                        <div class="empty-state">
+                            <div class="empty-icon material-icons">inbox</div>
+                            <p>No deposits yet</p>
+                            <p class="empty-subtitle">Start saving today to see your progress!</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Achievement Message -->
+                <div class="achievement-message" id="achievementMessage" style="display: none;">
+                    <div class="achievement-content">
+                        <div class="achievement-icon-wrapper">
+                            <span class="achievement-icon material-icons">celebration</span>
+                        </div>
+                        <h3>Congratulations!</h3>
+                        <p>You've successfully reached your savings goal!</p>
+                        <div class="achievement-sparkles">
+                            <span class="material-icons">auto_awesome</span>
+                            <span class="material-icons">auto_awesome</span>
+                            <span class="material-icons">auto_awesome</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <div class="toast-content">
+            <span class="toast-icon material-icons" id="toastIcon">check_circle</span>
+            <span class="toast-message" id="toastMessage"></span>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

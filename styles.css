@@ -1,0 +1,1531 @@
+/* ===== CSS Variables ===== */
+:root {
+    --primary-color: #6366f1;
+    --primary-dark: #4f46e5;
+    --primary-light: #818cf8;
+    --secondary-color: #8b5cf6;
+    --success-color: #10b981;
+    --success-light: #34d399;
+    --danger-color: #ef4444;
+    --warning-color: #f59e0b;
+    --info-color: #3b82f6;
+    --bg-color: #f8fafc;
+    --card-bg: #ffffff;
+    --text-color: #1e293b;
+    --text-secondary: #64748b;
+    --text-light: #94a3b8;
+    --border-color: #e2e8f0;
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    --shadow-xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    --border-radius: 16px;
+    --border-radius-sm: 12px;
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-fast: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ===== Reset & Base Styles ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+    background-attachment: fixed;
+    color: var(--text-color);
+    line-height: 1.6;
+    min-height: 100vh;
+    padding: 2rem 1rem;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.app-container {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+/* ===== Header ===== */
+.header {
+    text-align: center;
+    color: white;
+    margin-bottom: 3rem;
+    animation: fadeInDown 0.6s ease;
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.header-content {
+    position: relative;
+}
+
+.logo-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    display: inline-block;
+    animation: bounce 2s infinite;
+}
+
+.logo-icon .material-icons {
+    font-size: 4rem;
+    color: white;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+.header h1 {
+    font-size: 3rem;
+    font-weight: 800;
+    margin-bottom: 0.75rem;
+    text-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    letter-spacing: -0.02em;
+}
+
+.subtitle {
+    font-size: 1.25rem;
+    opacity: 0.95;
+    font-weight: 400;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* ===== Card Styles ===== */
+.card {
+    background: var(--card-bg);
+    border-radius: var(--border-radius);
+    padding: 2.5rem;
+    box-shadow: var(--shadow-xl);
+    margin-bottom: 2rem;
+    animation: fadeInUp 0.6s ease;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.card-header {
+    margin-bottom: 2rem;
+}
+
+.card-header h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text-color);
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.01em;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.card-header h2 .material-icons {
+    font-size: 2rem;
+    color: var(--primary-color);
+}
+
+.card-description {
+    color: var(--text-secondary);
+    font-size: 1rem;
+    font-weight: 400;
+}
+
+.card h2 {
+    margin-bottom: 1.5rem;
+    color: var(--text-color);
+    font-size: 1.8rem;
+}
+
+/* ===== Form Styles ===== */
+.goal-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.form-group label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    color: var(--text-color);
+    font-size: 0.95rem;
+}
+
+.label-icon {
+    font-size: 1.2rem;
+    display: inline-flex;
+    align-items: center;
+    color: var(--primary-color);
+}
+
+.label-icon.material-icons {
+    font-size: 1.2rem;
+}
+
+.input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-prefix {
+    position: absolute;
+    left: 1rem;
+    color: var(--text-secondary);
+    font-weight: 600;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.input-suffix {
+    position: absolute;
+    right: 1rem;
+    color: var(--text-light);
+    font-weight: 500;
+    font-size: 0.875rem;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 0.875rem 1rem;
+    padding-left: 2.5rem;
+    padding-right: 5rem;
+    border: 2px solid var(--border-color);
+    border-radius: var(--border-radius-sm);
+    font-size: 1rem;
+    transition: var(--transition);
+    font-family: inherit;
+    background: var(--card-bg);
+    color: var(--text-color);
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+    transform: translateY(-1px);
+}
+
+.form-group input::placeholder {
+    color: var(--text-light);
+}
+
+.time-period-group {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 0.75rem;
+}
+
+.time-period-group input {
+    padding-left: 1rem;
+}
+
+.time-period-group select {
+    padding-left: 1rem;
+}
+
+/* ===== Calendar Styles ===== */
+.calendar-description {
+    font-size: 0.875rem;
+    color: var(--text-light);
+    margin-bottom: 1rem;
+    font-style: italic;
+}
+
+.calendar-container {
+    background: var(--bg-color);
+    border: 2px solid var(--border-color);
+    border-radius: var(--border-radius-sm);
+    padding: 1.5rem;
+    margin-top: 0.5rem;
+}
+
+.calendar-weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.calendar-day-header {
+    text-align: center;
+    font-weight: 600;
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    padding: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.calendar-days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    min-height: 48px;
+}
+
+.calendar-days:empty::before {
+    content: 'Loading...';
+    grid-column: 1 / -1;
+    text-align: center;
+    color: var(--text-light);
+    padding: 1rem;
+}
+
+.calendar-day-btn {
+    background: var(--card-bg);
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    padding: 0.75rem 0.5rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-color);
+    cursor: pointer;
+    transition: var(--transition);
+    font-family: inherit;
+    text-align: center;
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.calendar-day-btn:focus {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+}
+
+.calendar-day-btn:hover {
+    background: var(--bg-color);
+    border-color: var(--primary-color);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+}
+
+.calendar-day-btn.selected {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+    color: white;
+    border-color: var(--primary-color);
+    box-shadow: var(--shadow-md);
+}
+
+.calendar-day-btn.selected:hover {
+    background: linear-gradient(135deg, var(--primary-dark), var(--primary-color));
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+.calendar-actions {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.calendar-actions button {
+    flex: 1;
+    max-width: 200px;
+}
+
+/* ===== Estimated Time Display ===== */
+.estimated-time-display {
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.estimated-time-card {
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
+    border: 2px solid var(--primary-color);
+    border-radius: var(--border-radius-sm);
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    animation: fadeIn 0.5s ease;
+}
+
+.estimated-time-card .material-icons {
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    flex-shrink: 0;
+}
+
+.estimated-time-content {
+    flex: 1;
+}
+
+.estimated-time-label {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.estimated-time-value {
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: var(--primary-color);
+    letter-spacing: -0.02em;
+}
+
+/* ===== Button Styles ===== */
+.btn {
+    padding: 0.875rem 1.75rem;
+    border: none;
+    border-radius: var(--border-radius-sm);
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    font-family: inherit;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.btn:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+    color: white;
+    width: 100%;
+    box-shadow: var(--shadow-md);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+.btn-primary:active {
+    transform: translateY(0);
+}
+
+.btn-secondary {
+    background: var(--text-secondary);
+    color: white;
+    padding: 0.625rem 1.25rem;
+    font-size: 0.9rem;
+    box-shadow: var(--shadow-sm);
+}
+
+.btn-secondary:hover {
+    background: var(--text-color);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow);
+}
+
+.btn-success {
+    background: linear-gradient(135deg, var(--success-color), #059669);
+    color: white;
+    padding: 0.875rem 1.75rem;
+    box-shadow: var(--shadow-md);
+}
+
+.btn-success:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+.btn-icon {
+    font-size: 1.1rem;
+    display: inline-flex;
+    align-items: center;
+}
+
+.btn-icon.material-icons {
+    font-size: 1.25rem;
+    display: inline-flex;
+    align-items: center;
+    vertical-align: middle;
+}
+
+/* ===== Goals List Section ===== */
+.goals-list-section .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.goals-list-section .card-header button {
+    margin: 0;
+}
+
+.goals-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.goal-card {
+    background: var(--bg-color);
+    border: 2px solid var(--border-color);
+    border-radius: var(--border-radius-sm);
+    padding: 1.5rem;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+}
+
+.goal-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--primary-color);
+}
+
+.goal-card.active {
+    border-color: var(--primary-color);
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.05), rgba(139, 92, 246, 0.05));
+}
+
+.goal-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+}
+
+.goal-card-header h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-color);
+    margin: 0;
+    flex: 1;
+}
+
+.goal-card-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.icon-btn {
+    background: transparent;
+    border: none;
+    padding: 0.5rem;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+    color: var(--text-secondary);
+}
+
+.icon-btn:hover {
+    background: var(--bg-color);
+    color: var(--primary-color);
+    transform: scale(1.1);
+}
+
+.icon-btn.delete:hover {
+    background: rgba(239, 68, 68, 0.1);
+    color: var(--danger-color);
+}
+
+.icon-btn .material-icons {
+    font-size: 1.25rem;
+}
+
+.goal-card-progress {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.goal-progress-bar {
+    flex: 1;
+    height: 8px;
+    background: var(--border-color);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.goal-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--success-color), var(--success-light));
+    border-radius: 4px;
+    transition: width 0.5s ease;
+}
+
+.goal-progress-text {
+    font-weight: 700;
+    color: var(--primary-color);
+    font-size: 0.9rem;
+    min-width: 45px;
+    text-align: right;
+}
+
+.goal-card-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.goal-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.goal-stat-label {
+    font-size: 0.75rem;
+    color: var(--text-light);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 600;
+}
+
+.goal-stat-value {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-color);
+}
+
+.goal-stat-value.success {
+    color: var(--success-color);
+}
+
+.time-value.info {
+    color: var(--info-color);
+}
+
+.active-badge {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: var(--primary-color);
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.empty-goals-state {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 3rem 2rem;
+    color: var(--text-secondary);
+}
+
+.empty-goals-state .empty-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    opacity: 0.5;
+    color: var(--text-light);
+}
+
+.empty-goals-state p {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--text-color);
+}
+
+.empty-goals-state .empty-subtitle {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    font-weight: 400;
+    margin-bottom: 1.5rem;
+}
+
+.empty-goals-state button {
+    margin-top: 1rem;
+}
+
+/* ===== Progress Section ===== */
+.progress-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.goal-actions {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.goal-title-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.progress-header h2 {
+    margin: 0;
+    color: var(--text-color);
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.goal-badge {
+    background: linear-gradient(135deg, var(--success-color), var(--success-light));
+    color: white;
+    padding: 0.375rem 0.875rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    box-shadow: var(--shadow-sm);
+}
+
+/* ===== Stats Container ===== */
+.stats-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.25rem;
+    margin-bottom: 2.5rem;
+}
+
+.stat-card {
+    background: var(--bg-color);
+    padding: 1.75rem;
+    border-radius: var(--border-radius-sm);
+    text-align: center;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+}
+
+.stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+.stat-card:hover::before {
+    transform: scaleX(1);
+}
+
+.stat-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-lg);
+    border-color: transparent;
+}
+
+.stat-card-primary {
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
+}
+
+.stat-card-success {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(52, 211, 153, 0.1));
+}
+
+.stat-card-warning {
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.1), rgba(251, 191, 36, 0.1));
+}
+
+.stat-card-info {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(96, 165, 250, 0.1));
+}
+
+.stat-icon {
+    font-size: 2rem;
+    margin-bottom: 0.75rem;
+    display: block;
+    color: var(--primary-color);
+}
+
+.stat-icon.material-icons {
+    font-size: 2.5rem;
+}
+
+.stat-card-success .stat-icon {
+    color: var(--success-color);
+}
+
+.stat-card-warning .stat-icon {
+    color: var(--warning-color);
+}
+
+.stat-card-info .stat-icon {
+    color: var(--info-color);
+}
+
+.stat-label {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.75rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.stat-value {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--text-color);
+    letter-spacing: -0.02em;
+}
+
+.stat-value.success {
+    color: var(--success-color);
+    font-size: 2.25rem;
+}
+
+/* ===== Progress Bar ===== */
+.progress-bar-container {
+    margin-bottom: 2.5rem;
+}
+
+.progress-bar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+}
+
+.progress-bar-header span:first-child {
+    font-weight: 600;
+    color: var(--text-color);
+    font-size: 0.95rem;
+}
+
+.progress-percentage-text {
+    font-weight: 700;
+    color: var(--primary-color);
+    font-size: 1.1rem;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 40px;
+    background: var(--bg-color);
+    border-radius: 20px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.1);
+    border: 2px solid var(--border-color);
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--success-color), var(--success-light), #34d399);
+    background-size: 200% 100%;
+    border-radius: 20px;
+    transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 700;
+    font-size: 0.9rem;
+    min-width: 40px;
+    position: relative;
+    overflow: hidden;
+    animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -200% 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+.progress-shine {
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    animation: shine 3s infinite;
+}
+
+@keyframes shine {
+    0% {
+        left: -100%;
+    }
+    100% {
+        left: 100%;
+    }
+}
+
+/* ===== Time Info ===== */
+.time-info {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.25rem;
+    margin-bottom: 2.5rem;
+    padding: 2rem;
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.05), rgba(139, 92, 246, 0.05));
+    border-radius: var(--border-radius-sm);
+    border: 1px solid var(--border-color);
+}
+
+.time-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.time-label {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.time-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-color);
+    letter-spacing: -0.01em;
+}
+
+/* ===== Selected Days Section ===== */
+.selected-days-section {
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 2px solid var(--border-color);
+}
+
+.selected-days-display {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 1rem;
+}
+
+.selected-day-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
+    border: 2px solid var(--primary-color);
+    border-radius: 20px;
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+.selected-day-badge .material-icons {
+    font-size: 1rem;
+    color: var(--primary-color);
+}
+
+/* ===== Deposit Section ===== */
+.deposit-section {
+    margin-top: 2.5rem;
+    padding-top: 2.5rem;
+    border-top: 2px solid var(--border-color);
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.deposit-section h3 {
+    margin: 0;
+    color: var(--text-color);
+    font-size: 1.5rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.deposit-section h3 .material-icons {
+    font-size: 1.5rem;
+    color: var(--success-color);
+    display: inline-flex;
+    align-items: center;
+    vertical-align: middle;
+}
+
+.deposit-count {
+    background: var(--bg-color);
+    color: var(--text-secondary);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+.deposit-form {
+    margin-bottom: 1.5rem;
+}
+
+.deposit-input-group {
+    display: flex;
+    gap: 0.75rem;
+}
+
+.deposit-input-group .input-wrapper {
+    flex: 1;
+    position: relative;
+}
+
+.deposit-input-group .input-suffix {
+    position: absolute;
+    right: 1rem;
+    color: var(--text-light);
+    font-weight: 500;
+    font-size: 0.875rem;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.deposit-input-group input {
+    width: 100%;
+    padding: 0.875rem 1rem;
+    padding-left: 2.5rem;
+    padding-right: 5rem;
+    border: 2px solid var(--border-color);
+    border-radius: var(--border-radius-sm);
+    font-size: 1rem;
+    transition: var(--transition);
+    font-family: inherit;
+}
+
+.deposit-input-group input:focus {
+    outline: none;
+    border-color: var(--success-color);
+    box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.1);
+    transform: translateY(-1px);
+}
+
+/* ===== Deposit List ===== */
+.deposit-list {
+    max-height: 400px;
+    overflow-y: auto;
+    padding-right: 0.5rem;
+}
+
+.deposit-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem;
+    background: var(--bg-color);
+    border-radius: var(--border-radius-sm);
+    margin-bottom: 0.75rem;
+    animation: slideInRight 0.4s ease;
+    border: 1px solid var(--border-color);
+    transition: var(--transition);
+}
+
+.deposit-item:hover {
+    transform: translateX(4px);
+    box-shadow: var(--shadow);
+    border-color: var(--success-color);
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.deposit-item-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+}
+
+.deposit-date {
+    font-size: 0.875rem;
+    color: var(--text-light);
+    font-weight: 400;
+}
+
+.deposit-amount {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--success-color);
+    letter-spacing: -0.01em;
+}
+
+.deposit-item button {
+    background: var(--danger-color);
+    color: white;
+    border: none;
+    padding: 0.625rem 1.25rem;
+    border-radius: var(--border-radius-sm);
+    cursor: pointer;
+    font-size: 0.875rem;
+    font-weight: 600;
+    transition: var(--transition);
+    font-family: inherit;
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+}
+
+.deposit-item button:hover {
+    background: #dc2626;
+    transform: scale(1.05);
+    box-shadow: var(--shadow-sm);
+}
+
+.deposit-item button .material-icons {
+    font-size: 1rem;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 3rem 2rem;
+    color: var(--text-secondary);
+}
+
+.empty-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    opacity: 0.5;
+    color: var(--text-light);
+}
+
+.empty-icon.material-icons {
+    font-size: 4rem;
+}
+
+.empty-state p {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--text-color);
+}
+
+.empty-subtitle {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    font-weight: 400;
+}
+
+/* ===== Achievement Message ===== */
+.achievement-message {
+    margin-top: 2rem;
+    padding: 3rem 2rem;
+    background: linear-gradient(135deg, var(--success-color), var(--success-light));
+    border-radius: var(--border-radius);
+    text-align: center;
+    color: white;
+    animation: achievementPop 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: var(--shadow-xl);
+}
+
+@keyframes achievementPop {
+    0% {
+        transform: scale(0.3);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    70% {
+        transform: scale(0.95);
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.achievement-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.achievement-icon-wrapper {
+    animation: rotate 2s ease-in-out infinite;
+}
+
+@keyframes rotate {
+    0%, 100% {
+        transform: rotate(0deg);
+    }
+    25% {
+        transform: rotate(-10deg);
+    }
+    75% {
+        transform: rotate(10deg);
+    }
+}
+
+.achievement-icon {
+    font-size: 5rem;
+    display: block;
+    color: white;
+}
+
+.achievement-icon.material-icons {
+    font-size: 5rem;
+}
+
+.achievement-sparkles .material-icons {
+    font-size: 1.5rem;
+    color: white;
+}
+
+.achievement-content h3 {
+    font-size: 2.5rem;
+    margin: 0;
+    font-weight: 800;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.achievement-content p {
+    font-size: 1.25rem;
+    margin: 0;
+    opacity: 0.95;
+}
+
+.achievement-sparkles {
+    display: flex;
+    gap: 1rem;
+    margin-top: 0.5rem;
+    font-size: 1.5rem;
+    animation: sparkle 2s ease-in-out infinite;
+}
+
+@keyframes sparkle {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
+
+/* ===== Toast Notification ===== */
+.toast {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    background: var(--card-bg);
+    padding: 1rem 1.5rem;
+    border-radius: var(--border-radius-sm);
+    box-shadow: var(--shadow-xl);
+    display: none;
+    align-items: center;
+    gap: 0.75rem;
+    z-index: 1000;
+    animation: toastSlideIn 0.4s ease;
+    border: 1px solid var(--border-color);
+    min-width: 300px;
+}
+
+.toast.show {
+    display: flex;
+}
+
+@keyframes toastSlideIn {
+    from {
+        transform: translateX(400px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.toast-content {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.toast-icon {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--success-color);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.875rem;
+    flex-shrink: 0;
+}
+
+.toast-icon.material-icons {
+    font-size: 1.25rem;
+    width: auto;
+    height: auto;
+    background: transparent;
+    color: var(--success-color);
+}
+
+.toast.warning .toast-icon.material-icons {
+    color: var(--warning-color);
+}
+
+.toast-message {
+    color: var(--text-color);
+    font-weight: 500;
+    font-size: 0.95rem;
+}
+
+/* ===== Responsive Design ===== */
+@media (max-width: 768px) {
+    body {
+        padding: 1rem 0.5rem;
+    }
+
+    .header h1 {
+        font-size: 2rem;
+    }
+
+    .logo-icon {
+        font-size: 3rem;
+    }
+
+    .subtitle {
+        font-size: 1rem;
+    }
+
+    .card {
+        padding: 1.5rem;
+    }
+
+    .card-header h2 {
+        font-size: 1.5rem;
+    }
+
+    .goals-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .goals-list-section .card-header {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .goals-list-section .card-header button {
+        width: 100%;
+    }
+
+    .goal-actions {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .goal-actions button {
+        width: 100%;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+
+    .stats-container {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+
+    .stat-card {
+        padding: 1.25rem;
+    }
+
+    .stat-value {
+        font-size: 1.5rem;
+    }
+
+    .stat-value.success {
+        font-size: 1.75rem;
+    }
+
+    .time-info {
+        grid-template-columns: 1fr;
+        padding: 1.5rem;
+    }
+
+    .deposit-input-group {
+        flex-direction: column;
+    }
+
+    .deposit-input-group button {
+        width: 100%;
+    }
+
+    .calendar-actions {
+        flex-direction: column;
+    }
+
+    .calendar-actions button {
+        max-width: 100%;
+        width: 100%;
+    }
+
+    .calendar-day-btn {
+        padding: 0.5rem 0.25rem;
+        font-size: 0.8rem;
+        min-height: 40px;
+    }
+
+    .progress-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .progress-header button {
+        width: 100%;
+    }
+
+    .toast {
+        right: 1rem;
+        left: 1rem;
+        min-width: auto;
+    }
+
+    .achievement-content h3 {
+        font-size: 2rem;
+    }
+
+    .achievement-icon {
+        font-size: 4rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .stats-container {
+        grid-template-columns: 1fr;
+    }
+
+    .header h1 {
+        font-size: 1.75rem;
+    }
+}
+
+/* ===== Scrollbar Styling ===== */
+.deposit-list::-webkit-scrollbar {
+    width: 8px;
+}
+
+.deposit-list::-webkit-scrollbar-track {
+    background: var(--bg-color);
+    border-radius: 4px;
+}
+
+.deposit-list::-webkit-scrollbar-thumb {
+    background: var(--text-light);
+    border-radius: 4px;
+    transition: var(--transition);
+}
+
+.deposit-list::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-color);
+}
+
+/* ===== Loading States ===== */
+.btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none !important;
+}
+
+/* ===== Focus Visible ===== */
+*:focus-visible {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+}
