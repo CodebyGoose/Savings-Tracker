@@ -1529,3 +1529,27 @@ body {
     outline: 2px solid var(--primary-color);
     outline-offset: 2px;
 }
+
+/* ===== Goal Form Header Alignment ===== */
+.goal-section .card-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.goal-section .card-header #backToGoalListFromFormBtn {
+    margin-left: auto;
+}
+
+/* ===== Responsive Adjustments for Goal Form Header ===== */
+@media (max-width: 768px) {
+    .goal-section .card-header {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .goal-section .card-header #backToGoalListFromFormBtn {
+        width: 100%;
+        margin-left: 0;
+    }
+}

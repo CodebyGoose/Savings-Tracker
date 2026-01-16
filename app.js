@@ -257,8 +257,6 @@ const SavingsTracker = {
         if (!dayBtn) return;
 
         dayBtn.classList.toggle('selected');
-        // Update estimated time when days change
-        this.updateEstimatedTimeDisplay();
     },
 
     // Select all days
@@ -266,7 +264,6 @@ const SavingsTracker = {
         document.querySelectorAll('.calendar-day-btn').forEach(btn => {
             btn.classList.add('selected');
         });
-        this.updateEstimatedTimeDisplay();
     },
 
     // Clear all days
@@ -274,7 +271,6 @@ const SavingsTracker = {
         document.querySelectorAll('.calendar-day-btn').forEach(btn => {
             btn.classList.remove('selected');
         });
-        this.updateEstimatedTimeDisplay();
     },
 
     // Get selected days from calendar
@@ -380,10 +376,15 @@ const SavingsTracker = {
             };
         }
 
-        const dailyAmount = parseFloat(targetGoal.dailyAmount) || 0;
-        if (dailyAmount <= 0) return null;
+        const deposits = Array.isArray(targetGoal.deposits) ? targetGoal.deposits : [];
+        if (deposits.length === 0) {
+            return null; // no estimate until deposits exist
+        }
+        const totalDeposited = deposits.reduce((sum, d) => sum + (parseFloat(d.amount) || 0), 0);
+        const avgPerDeposit = totalDeposited / deposits.length;
+        if (avgPerDeposit <= 0) return null;
 
-        const remainingDeposits = Math.ceil(remainingAmount / dailyAmount);
+        const remainingDeposits = Math.ceil(remainingAmount / avgPerDeposit);
         const depositsPerWeek = (targetGoal.selectedDays && targetGoal.selectedDays.length > 0) ? targetGoal.selectedDays.length : 7;
 
         const totalWeeks = Math.ceil(remainingDeposits / depositsPerWeek);
@@ -427,12 +428,11 @@ const SavingsTracker = {
     setGoal() {
         const goalName = document.getElementById('goalName').value.trim();
         const goalAmount = parseFloat(document.getElementById('goalAmount').value);
-        const dailyAmount = parseFloat(document.getElementById('dailyAmount').value);
         const timeValue = parseInt(document.getElementById('timeValue').value);
         const timeUnit = document.getElementById('timeUnit').value;
         const selectedDays = this.getSelectedDays();
 
-        if (!goalName || !goalAmount || !dailyAmount) {
+        if (!goalName || !goalAmount) {
             this.showToast('Please fill in all required fields', 'warning');
             return;
         }
@@ -442,34 +442,17 @@ const SavingsTracker = {
             return;
         }
 
-        // Calculate estimated time
-        const estimate = this.calculateEstimatedTime(goalAmount, dailyAmount, selectedDays);
-        if (!estimate) {
-            this.showToast('Unable to calculate time estimate. Please check your inputs.', 'warning');
-            return;
-        }
-
-        // Calculate start date
         const startDate = new Date();
-        
-        // Calculate end date based on deposit schedule
-        const endDate = this.calculateEndDate(startDate, estimate.totalDepositsNeeded, estimate.depositsPerWeek);
 
         const goalData = {
             name: goalName,
             targetAmount: goalAmount,
-            dailyAmount: dailyAmount,
             timeValue: timeValue,
             timeUnit: timeUnit,
-            totalDays: estimate.totalDays,
-            totalWeeks: estimate.totalWeeks,
-            totalMonths: estimate.totalMonths,
-            depositsPerWeek: estimate.depositsPerWeek,
-            totalDepositsNeeded: estimate.totalDepositsNeeded,
             startDate: startDate.toISOString(),
-            endDate: endDate.toISOString(),
+            endDate: null,
             deposits: [],
-            selectedDays: selectedDays // Store selected days for deposits
+            selectedDays: selectedDays
         };
 
         // Check if we're editing an existing goal
@@ -501,6 +484,8 @@ const SavingsTracker = {
         document.getElementById('goalForm').removeAttribute('data-editing-goal-id');
 
         this.saveData();
+        // After saving, navigate to progress view for the current goal
+        this.showProgressView();
         this.updateUI();
     },
 
@@ -562,7 +547,6 @@ const SavingsTracker = {
 
         document.getElementById('goalName').value = goal.name;
         document.getElementById('goalAmount').value = goal.targetAmount;
-        document.getElementById('dailyAmount').value = goal.dailyAmount;
         document.getElementById('goalForm').dataset.editingGoalId = goal.id;
         document.getElementById('goalFormTitle').textContent = 'Edit Savings Goal';
 
@@ -572,11 +556,6 @@ const SavingsTracker = {
         // Initialize calendar with selected days if they exist
         const selectedDays = (goal.selectedDays && Array.isArray(goal.selectedDays)) ? goal.selectedDays : [];
         this.initCalendar(selectedDays);
-        
-        // Update estimated time display
-        setTimeout(() => {
-            this.updateEstimatedTimeDisplay();
-        }, 100);
     },
 
     // Delete a goal
@@ -631,26 +610,6 @@ const SavingsTracker = {
         setTimeout(() => {
             this.initCalendar();
         }, 50);
-        
-        // Add event listeners for real-time calculation
-        const goalAmountInput = document.getElementById('goalAmount');
-        const dailyAmountInput = document.getElementById('dailyAmount');
-        
-        if (goalAmountInput) {
-            // Remove old listeners
-            const newGoalAmountInput = goalAmountInput.cloneNode(true);
-            goalAmountInput.parentNode.replaceChild(newGoalAmountInput, goalAmountInput);
-            newGoalAmountInput.addEventListener('input', () => this.updateEstimatedTimeDisplay());
-            newGoalAmountInput.addEventListener('change', () => this.updateEstimatedTimeDisplay());
-        }
-        
-        if (dailyAmountInput) {
-            // Remove old listeners
-            const newDailyAmountInput = dailyAmountInput.cloneNode(true);
-            dailyAmountInput.parentNode.replaceChild(newDailyAmountInput, dailyAmountInput);
-            newDailyAmountInput.addEventListener('input', () => this.updateEstimatedTimeDisplay());
-            newDailyAmountInput.addEventListener('change', () => this.updateEstimatedTimeDisplay());
-        }
     },
 
     // Show progress view
@@ -846,9 +805,6 @@ const SavingsTracker = {
                 progressPercentText.textContent = `${progress.toFixed(1)}%`;
             }
 
-            // Update time info
-            document.getElementById('displayDailyAmount').textContent = this.formatCurrency(goal.dailyAmount);
-            
             // Display estimated time period (dynamic based on remaining progress)
             let calculatedTimeDisplay = '-';
             if (schedule) {

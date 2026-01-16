@@ -40,6 +40,10 @@
                 <div class="card-header">
                     <h2><span class="material-icons">track_changes</span> <span id="goalFormTitle">Set Your Savings Goal</span></h2>
                     <p class="card-description">Define what you're working towards and start your journey</p>
+                    <button type="button" id="backToGoalListFromFormBtn" class="btn btn-secondary">
+                        <span class="material-icons">arrow_back</span>
+                        Back to All Goals
+                    </button>
                 </div>
                 <form id="goalForm" class="goal-form">
                     <div class="form-group">
@@ -61,22 +65,11 @@
                                 <span class="input-suffix">pesos</span>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label for="dailyAmount">
-                                <span class="label-icon material-icons">payments</span>
-                                Daily Deposit
-                            </label>
-                            <div class="input-wrapper">
-                                <span class="input-prefix">₱</span>
-                                <input type="number" id="dailyAmount" placeholder="100" min="0.01" step="0.01" required>
-                                <span class="input-suffix">pesos</span>
-                            </div>
-                        </div>
-                    </div>
+                                            </div>
                     <div class="form-group">
                         <label for="timePeriod">
                             <span class="label-icon material-icons">schedule</span>
-                            Target Time Period (Optional)
+                            Target Time Period
                         </label>
                         <p class="calendar-description">Set a target duration for your goal. The app will still estimate completion based on your deposits.</p>
                         <div class="time-period-group">
@@ -119,21 +112,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="estimated-time-display" id="estimatedTimeDisplay" style="display: none;">
-                        <div class="estimated-time-card">
-                            <span class="material-icons">schedule</span>
-                            <div class="estimated-time-content">
-                                <div class="estimated-time-label">Estimated Time to Reach Goal:</div>
-                                <div class="estimated-time-value" id="estimatedTimeValue">-</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-actions">
-                        <button type="button" id="backToGoalListFromFormBtn" class="btn btn-secondary">
-                            <span class="material-icons">arrow_back</span>
-                            Back to All Goals
-                        </button>
-                        <button type="submit" class="btn btn-primary">
+                                        <div class="form-actions">
+                                                <button type="submit" class="btn btn-primary">
                             <span class="material-icons">save</span>
                             Save Goal
                         </button>
@@ -203,11 +183,7 @@
 
                 <!-- Time Information -->
                 <div class="time-info">
-                    <div class="time-item">
-                        <span class="time-label">Daily Deposit:</span>
-                        <span class="time-value" id="displayDailyAmount">₱0</span>
-                    </div>
-                    <div class="time-item">
+                                        <div class="time-item">
                         <span class="time-label">Time Period:</span>
                         <span class="time-value" id="displayTimePeriod">-</span>
                     </div>
