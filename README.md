@@ -1,81 +1,80 @@
 # 💰 Savings Tracker
 
-A beautiful and intuitive web application to track your savings progress toward your financial goals.
+An intuitive web application to plan and track savings across one or more goals, with weekly deposit scheduling and dynamic time estimates.
 
 ## Features
 
-- 🎯 **Set Savings Goals**: Define what you're saving for (e.g., Computer, Vacation, Car)
-- 💵 **Track Daily Deposits**: Add deposits as you save money
-- ⏱️ **Time Period Management**: Set goals with time periods in days, months, or years
-- 📊 **Visual Progress Tracking**: See your progress with a visual progress bar and statistics
-- 💾 **Data Persistence**: All your data is saved locally in your browser
-- 📱 **Responsive Design**: Works perfectly on desktop, tablet, and mobile devices
-- 🎉 **Achievement Notifications**: Get notified when you reach your goal!
+- 🗂️ Multiple goals: Create, switch, edit, and delete savings goals
+- 📅 Weekly schedule: Select specific days of the week for deposits (e.g., Mon/Wed/Fri)
+- ⏱️ Dynamic time estimates: Estimated time updates based on your schedule and remaining amount
+- 💵 Deposit tracking: Add deposits with timestamps and view a full history
+- 📊 Visual progress: Progress bar, percentage, saved/remaining amounts
+- 🔔 Goal achievements: Celebrate when you reach 100%
+- 💾 Local persistence: Data stored in your browser (LocalStorage)
+- 📱 Responsive design: Works on desktop and mobile
 
-## How to Use
+## How to use
 
-1. **Open the Application**
-   - Simply open `index.html` in your web browser
-   - No installation or server required!
+1) Open the application
+- Open index.html in your browser (no server required)
 
-2. **Set Your Goal**
-   - Enter what you're saving for (e.g., "Computer")
-   - Set your target amount in pesos (e.g., 60000)
-   - Enter your daily deposit amount (e.g., 100)
-   - Choose your time period (days, months, or years) and duration
-   - Click "Start Saving"
+2) Create a goal
+- Enter Goal name (e.g., “Computer”)
+- Enter Target amount in pesos (e.g., 60000)
+- Enter Daily deposit amount (the amount you plan to deposit per scheduled day)
+- Select deposit days in the weekly calendar (must pick at least one day)
+- Optionally set a target time value/unit; this is shown as “Your Target” for reference
+- Click Start Saving
 
-3. **Add Deposits**
-   - Enter the amount you want to deposit
-   - Click "Add Deposit"
-   - Your progress will update automatically
+3) Add deposits
+- Enter an amount and click Add Deposit
+- Your progress, remaining amount, and estimates update automatically
 
-4. **Track Your Progress**
-   - View your current savings, remaining amount, and progress percentage
-   - See how many days are remaining
-   - Check your estimated completion date
-   - View your deposit history
+4) Manage goals
+- View all goals on the goals list
+- Switch active goal (visibility icon)
+- Edit goal (edit icon). Editing updates schedule and recalculations
+- Delete goal (delete icon). This removes the goal and its deposits
 
-5. **Edit Your Goal**
-   - Click "Edit Goal" to modify your savings goal
-   - Note: Editing will reset your deposits
+## How time estimation works
 
-## Example Usage
+- The app calculates how many deposits are needed (remaining amount ÷ daily deposit amount)
+- Your selected weekly days determine deposits per week
+- The total time is estimated from the current remaining amount and schedule
+- Estimates include days/weeks/months/years (approximate based on 7 and 30-day months)
 
-**Goal**: Buy a Computer  
-**Target Amount**: 60,000 pesos  
-**Daily Deposit**: 100 pesos  
-**Time Period**: 6 months  
+## Example
 
-The app will calculate:
-- Total days: 180 days (6 months × 30 days)
-- Estimated completion date
-- Track your progress as you add deposits
+- Goal: Buy a Computer
+- Target: ₱60,000
+- Daily Deposit: ₱100
+- Selected Days: Mon–Fri (5 days/week)
 
-## Technical Details
+Total deposits needed: 600
+Estimated weeks (approx.): 600 ÷ 5 = 120 weeks
+Estimated days (approx.): 120 × 7 = 840 days
+Displayed estimate adapts as you add deposits
 
-- **Pure HTML, CSS, and JavaScript** - No frameworks required
-- **LocalStorage** - All data is stored locally in your browser
-- **Responsive Design** - Works on all screen sizes
-- **Modern UI** - Beautiful gradient design with smooth animations
+## Technical details
+
+- HTML, CSS, and Vanilla JavaScript
+- LocalStorage keys: savingsGoals, currentGoalId (auto-migrates older single-goal data)
+- Currency display: Peso (₱) with localized formatting
+- Accessible controls with keyboard support for day selection
 
 ## Files
 
-- `index.html` - Main HTML structure
-- `styles.css` - All styling and responsive design
-- `app.js` - Application logic and functionality
-- `README.md` - This file
+- index.html — UI structure
+- styles.css — Styling and responsive layout
+- app.js — Application logic (multi-goal, weekly scheduling, persistence)
+- README.md — Project documentation
 
-## Browser Compatibility
+## Browser compatibility
 
-Works on all modern browsers:
-- Chrome
-- Firefox
-- Safari
-- Edge
+- Chrome, Firefox, Safari, Edge (latest versions)
 
 ## Privacy
 
-All data is stored locally in your browser. Nothing is sent to any server. Your savings data is completely private and secure.
+All data is stored locally in your browser. No servers or external APIs are used.
 
 Enjoy tracking your savings! 🎉

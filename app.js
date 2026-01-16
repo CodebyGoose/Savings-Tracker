@@ -361,6 +361,45 @@ const SavingsTracker = {
         return endDate;
     },
 
+    // Calculate remaining schedule and end date dynamically based on current progress
+    calculateRemainingSchedule(goal = null) {
+        const targetGoal = goal || this.getCurrentGoal();
+        if (!targetGoal) return null;
+
+        const today = new Date();
+
+        const remainingAmount = this.getRemainingAmount(targetGoal);
+        if (remainingAmount <= 0) {
+            return {
+                remainingDeposits: 0,
+                depositsPerWeek: (targetGoal.selectedDays && targetGoal.selectedDays.length > 0) ? targetGoal.selectedDays.length : 7,
+                totalWeeks: 0,
+                totalDays: 0,
+                endDate: today,
+                displayText: '0 days'
+            };
+        }
+
+        const dailyAmount = parseFloat(targetGoal.dailyAmount) || 0;
+        if (dailyAmount <= 0) return null;
+
+        const remainingDeposits = Math.ceil(remainingAmount / dailyAmount);
+        const depositsPerWeek = (targetGoal.selectedDays && targetGoal.selectedDays.length > 0) ? targetGoal.selectedDays.length : 7;
+
+        const totalWeeks = Math.ceil(remainingDeposits / depositsPerWeek);
+        const totalDays = totalWeeks * 7;
+        const endDate = this.calculateEndDate(today, remainingDeposits, depositsPerWeek);
+
+        return {
+            remainingDeposits,
+            depositsPerWeek,
+            totalWeeks,
+            totalDays,
+            endDate,
+            displayText: this.formatTimeEstimate(totalDays, totalWeeks, depositsPerWeek)
+        };
+    },
+
     // Update estimated time display
     updateEstimatedTimeDisplay() {
         const goalAmount = parseFloat(document.getElementById('goalAmount')?.value) || 0;
@@ -644,13 +683,14 @@ const SavingsTracker = {
         return Math.min(percent, 100);
     },
 
-    // Calculate days remaining
+    // Calculate days remaining (dynamic based on current progress and schedule)
     getDaysRemaining(goal = null) {
         const targetGoal = goal || this.getCurrentGoal();
         if (!targetGoal) return null;
-        const endDate = new Date(targetGoal.endDate);
+        const schedule = this.calculateRemainingSchedule(targetGoal);
+        if (!schedule || !schedule.endDate) return null;
         const today = new Date();
-        const diffTime = endDate - today;
+        const diffTime = schedule.endDate - today;
         const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
         return diffDays > 0 ? diffDays : 0;
     },
@@ -783,6 +823,7 @@ const SavingsTracker = {
             const remaining = this.getRemainingAmount();
             const progress = this.getProgressPercent();
             const daysRemaining = this.getDaysRemaining();
+            const schedule = this.calculateRemainingSchedule(goal);
 
             // Update stats
             document.getElementById('targetAmount').textContent = this.formatCurrency(goal.targetAmount);
@@ -808,24 +849,12 @@ const SavingsTracker = {
             // Update time info
             document.getElementById('displayDailyAmount').textContent = this.formatCurrency(goal.dailyAmount);
             
-            // Display estimated time period
+            // Display estimated time period (dynamic based on remaining progress)
             let calculatedTimeDisplay = '-';
-            if (goal.totalWeeks !== undefined) {
-                if (goal.totalDays < 7) {
-                    calculatedTimeDisplay = `${goal.totalDays} ${goal.totalDays === 1 ? 'day' : 'days'}`;
-                } else if (goal.totalDays < 30) {
-                    calculatedTimeDisplay = `${goal.totalWeeks} ${goal.totalWeeks === 1 ? 'week' : 'weeks'}`;
-                } else if (goal.totalDays < 365) {
-                    calculatedTimeDisplay = `${goal.totalMonths} ${goal.totalMonths === 1 ? 'month' : 'months'}`;
-                } else {
-                    const years = Math.floor(goal.totalDays / 365);
-                    const months = goal.totalMonths % 12;
-                    if (months > 0) {
-                        calculatedTimeDisplay = `${years} ${years === 1 ? 'year' : 'years'} ${months} ${months === 1 ? 'month' : 'months'}`;
-                    } else {
-                        calculatedTimeDisplay = `${years} ${years === 1 ? 'year' : 'years'}`;
-                    }
-                }
+            if (schedule) {
+                calculatedTimeDisplay = schedule.totalDays === 0
+                    ? '0 days'
+                    : this.formatTimeEstimate(schedule.totalDays, schedule.totalWeeks, schedule.depositsPerWeek);
             }
             document.getElementById('displayTimePeriod').textContent = calculatedTimeDisplay;
 
@@ -842,12 +871,14 @@ const SavingsTracker = {
             
             document.getElementById('daysRemaining').textContent = daysRemaining !== null ? `${daysRemaining} days` : '-';
             
-            const endDate = new Date(goal.endDate);
-            document.getElementById('estimatedCompletion').textContent = endDate.toLocaleDateString('en-US', { 
-                year: 'numeric', 
-                month: 'long', 
-                day: 'numeric' 
-            });
+            const endDate = schedule && schedule.endDate ? schedule.endDate : (goal.endDate ? new Date(goal.endDate) : null);
+            document.getElementById('estimatedCompletion').textContent = endDate
+                ? endDate.toLocaleDateString('en-US', { 
+                    year: 'numeric', 
+                    month: 'long', 
+                    day: 'numeric' 
+                })
+                : '-';
 
             // Update selected days display
             this.updateSelectedDaysDisplay(goal);
