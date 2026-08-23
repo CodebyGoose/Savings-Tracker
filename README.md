@@ -1,84 +1,187 @@
-# 💰 Savings Tracker
+# Savings Tracker
 
-An intuitive web application to plan and track savings across one or more goals. Estimates are calculated from your actual deposit history and weekly deposit schedule, not from a preset daily amount.
+A modern, deliberate web application built with React, TypeScript, and Vite to plan, schedule, and achieve your financial savings targets with precision.
+
+---
+
+## Overview
+
+Savings Tracker removes guesswork from personal savings. Instead of assuming arbitrary daily amounts, the app dynamically models your completion timeline using your **actual deposit history** and your **selected weekly deposit schedule**.
+
+Designed with a high-contrast, solid design system (no gradients, no clutter), the interface provides immediate clarity on where your money goes and when you will reach your targets.
+
+---
 
 ## Features
 
-- 🗂️ Multiple goals: Create, switch, edit, and delete savings goals
-- 📅 Weekly schedule: Select specific days of the week for deposits (e.g., Mon/Wed/Fri)
-- ⏱️ Post-deposit estimates: Time estimates are based on your average deposit size and selected weekly schedule
-- 💵 Deposit tracking: Add deposits with timestamps and view a full history
-- 📊 Visual progress: Progress bar, percentage, saved/remaining amounts
-- 🔔 Goal achievements: Celebrate when you reach 100%
-- 💾 Local persistence: Data stored in your browser (LocalStorage)
-- 📱 Responsive design: Works on desktop and mobile
+- **Multi-Goal Architecture**: Manage multiple independent savings targets with individualized timelines and progress tracking.
+- **Weekly Schedule Customization**: Choose active deposit days per week (e.g., Mon/Wed/Fri) to align with income cycles and personal saving routines.
+- **Deposit-Driven Estimation**: Completion dates and required timelines dynamically adapt as you record deposits of varying sizes.
+- **Target Pace Projections**: Real-time feedback calculating the exact amount needed per scheduled deposit day to meet your deadline.
+- **Granular Transaction History**: Timestamped deposit records with optional memo notes and one-click quick presets.
+- **Milestone & Progress Tracking**: Real-time percentage breakdowns, remaining balance indicators, and goal achievement recognition.
+- **Deliberate Design System**: Solid dark and light modes, 5-step grayscale ramp, purposeful emerald accents, and zero emoji decoration.
+- **Private & Local-First**: 100% client-side data persistence with automatic schema migration in `localStorage`.
 
-## How to use
+---
 
-1) Open the application
-- Open index.html in your browser (no server required)
+## Quick Start Tutorial
 
-2) Create a goal
-- Enter Goal name (e.g., “Computer”)
-- Enter Target amount in pesos (e.g., 60000)
-- Select deposit days in the weekly calendar (pick at least one day)
-- Optionally set a target time value/unit; shown as “Your Target” for reference
-- Click Save Goal
+Follow this step-by-step guide to set up and use Savings Tracker effectively.
 
-3) Add deposits
-- Enter an amount and click Add Deposit
-- Your progress, remaining amount, and estimates update automatically based on your deposit history
+### Step 1: Create a Savings Goal
 
-4) Manage goals
-- View all goals on the goals list
-- Switch active goal (visibility icon)
-- Edit goal (edit icon). Editing updates schedule and recalculations
-- Delete goal (delete icon). This removes the goal and its deposits
+1. Click **New Goal** in the navigation header.
+2. Enter the **Goal Name** (e.g., `Emergency Fund`, `Workstation Upgrade`, or `Annual Insurance`).
+3. Set your **Target Amount** in Philippine Pesos (₱).
+4. Define your **Target Duration** (e.g., `6 Months` or `1 Year`).
+5. Select your **Deposit Days** on the weekday selector (e.g., select `Mon`, `Wed`, `Fri` for 3 deposits per week).
+6. Review the **Live Projection Preview** at the bottom of the modal to see the recommended amount per scheduled day.
+7. Click **Create Goal**.
 
-## How estimation works now
+---
 
-- The app estimates remaining time using your actual deposits:
-  - Average deposit amount = total deposited ÷ number of deposits
-  - Remaining deposits needed = remaining amount ÷ average deposit amount
-  - Deposits per week = number of selected weekly days
-  - Estimated weeks = remaining deposits needed ÷ deposits per week (rounded up)
-  - Estimated days ≈ estimated weeks × 7
-- Estimates appear after you add at least one deposit for the goal
+### Step 2: Record Deposits
 
-## Example
+1. From the **Active Goal** overview, locate the **Record New Deposit** card.
+2. Enter your deposit amount or click one of the quick presets (`+₱100`, `+₱500`, `+₱1,000`, `+₱5,000`).
+3. (Optional) Click **Add note** to attach a description (e.g., `Bi-weekly payroll contribution`).
+4. Click **Add Deposit**.
 
-- Goal: Buy a Computer
-- Target: ₱60,000
-- Selected Days: Mon–Fri (5 days/week)
-- First three deposits: ₱200, ₱150, ₱250 → average ₱200
+Your current savings, remaining amount, progress percentage, and timeline projection will recalculate immediately.
 
-Remaining amount example: ₱60,000 − ₱600 = ₱59,400
-- Remaining deposits needed ≈ 59,400 ÷ 200 = 297
-- Estimated weeks ≈ 297 ÷ 5 = 60
-- Estimated days ≈ 60 × 7 = 420 days
+---
 
-The estimate updates as you add deposits and adjust scheduled days.
+### Step 3: Interpret Your Projections
 
-## Technical details
+The app calculates two synchronized metrics:
 
-- HTML, CSS, and Vanilla JavaScript
-- LocalStorage keys: savingsGoals, currentGoalId (auto-migrates older single-goal data)
-- Currency display: Peso (₱) with localized formatting
-- Accessible controls with keyboard support for day selection
+| Metric | Description | Formula / Source |
+| :--- | :--- | :--- |
+| **Estimated Timeline** | Projected completion date based on real behavior | `Current Date + (Remaining Amount / Avg Deposit / Scheduled Days Per Week * 7)` |
+| **Target Pace** | Recommended deposit size to meet target duration | `Target Amount / Total Scheduled Days in Target Duration` |
+| **Average Deposit** | Rolling mean of all recorded deposits | `Total Saved / Total Deposit Count` |
+| **Remaining Balance** | Total amount left to reach 100% | `Target Amount - Total Saved` |
 
-## Files
+---
 
-- index.html — UI structure
-- styles.css — Styling and responsive layout
-- app.js — Application logic (multi-goal, weekly scheduling, deposit-based estimates)
-- README.md — Project documentation
+### Step 4: Manage Multiple Goals
 
-## Browser compatibility
+- Click **All Goals** in the header to view an aggregated portfolio overview with comparison cards.
+- Use the **Active Goal Dropdown** or click **View Details** on any goal card to switch focus.
+- Edit target parameters (name, amount, duration, active days) at any time by clicking **Edit**.
+- Use the sun/moon toggle in the top-right corner to switch between **Dark** and **Light** themes.
 
-- Chrome, Firefox, Safari, Edge (latest versions)
+---
 
-## Privacy
+## Tech Stack
 
-All data is stored locally in your browser. No servers or external APIs are used.
+| Layer | Technology | Purpose |
+| :--- | :--- | :--- |
+| **UI Framework** | React 19 | Declarative UI and component lifecycle |
+| **Language** | TypeScript 5.7 | Static typing and compile-time correctness |
+| **Build Tool** | Vite 6 | Fast local HMR and optimized production bundles |
+| **Icons** | Lucide React | Clean, scalable vector iconography |
+| **Styling** | Vanilla CSS Tokens | Solid, deliberate monochromatic design system |
+| **Persistence** | LocalStorage API | Local-first, private client-side data store |
 
-Enjoy tracking your savings! 🎉
+---
+
+## Project Structure
+
+```text
+c:/Code/Saving-Tracker/
+├── src/
+│   ├── components/
+│   │   ├── ConfirmModal.tsx      # Accessible confirmation dialogs
+│   │   ├── GoalFormModal.tsx     # Goal creation and editing modal
+│   │   ├── GoalList.tsx          # Multi-goal dashboard grid
+│   │   ├── GoalOverview.tsx      # Active goal view & deposit manager
+│   │   ├── Header.tsx            # App bar, portfolio total, theme toggle
+│   │   └── Toast.tsx             # Notification banner component
+│   ├── hooks/
+│   │   └── useSavingsTracker.ts  # State management and storage sync
+│   ├── types/
+│   │   └── index.ts              # TypeScript domain types and schemas
+│   ├── utils/
+│   │   ├── calculations.ts       # Mathematical models and formatters
+│   │   └── storage.ts            # LocalStorage migrations and handlers
+│   ├── App.tsx                   # Main layout and view routing
+│   ├── index.css                 # Deliberate solid CSS design system
+│   └── main.tsx                  # Application entry point
+├── index.html                    # HTML shell
+├── package.json                  # Dependencies and scripts
+├── tsconfig.json                 # TypeScript compiler configuration
+└── vite.config.ts                # Vite bundler configuration
+```
+
+---
+
+## Development Workflow
+
+### Prerequisites
+- Node.js (v18.0.0 or higher)
+- npm (v9.0.0 or higher)
+
+### Installation
+```bash
+# Clone or navigate to the project directory
+cd c:/Code/Saving-Tracker
+
+# Install dependencies
+npm install
+```
+
+### Running Locally
+```bash
+# Start Vite development server
+npm run dev
+```
+Open `http://localhost:5173` in your browser.
+
+### Production Build
+```bash
+# Compile TypeScript and bundle with Vite
+npm run build
+
+# Preview the production build locally
+npm run preview
+```
+
+---
+
+## Mathematical Specification
+
+### Estimation Engine
+
+1. **Average Deposit ($\bar{D}$)**:
+   $$\bar{D} = \frac{\sum_{i=1}^{n} D_i}{n}$$
+   *(where $D_i$ is the amount of deposit $i$, and $n$ is the total deposit count)*
+
+2. **Remaining Balance ($R$)**:
+   $$R = \max(0, T - \sum_{i=1}^{n} D_i)$$
+   *(where $T$ is the target amount)*
+
+3. **Required Deposits Needed ($k$)**:
+   $$k = \lceil \frac{R}{\bar{D}} \rceil$$
+
+4. **Estimated Weeks ($W$)**:
+   $$W = \lceil \frac{k}{S} \rceil$$
+   *(where $S$ is the number of scheduled deposit days per week, $1 \le S \le 7$)*
+
+5. **Estimated Days ($E$)**:
+   $$E = W \times 7$$
+
+---
+
+## Privacy & Security
+
+- **Zero Remote Telemetry**: All data remains exclusively within the user's browser storage.
+- **Client-Side Sanitation**: Inputs and values are parsed with strict floating-point sanitizers and defensive schema guards.
+- **No External CDN Dependencies**: Bundled locally with zero tracking scripts or analytics cookies.
+
+---
+
+## License
+
+MIT License. Open source and free for personal or commercial use.
